@@ -106,4 +106,11 @@ var defaultMetaConfigorMaps = map[string]func(*Meta){
 			meta.Config.ConfigureQorMeta(meta)
 		}
 	},
+
+	"ueditor": func(meta *Meta) {
+		if _, ok := meta.Config.(*UeditorConfig); !ok || meta.Config == nil {
+			meta.Config = &UeditorConfig{}
+			meta.Config.ConfigureQorMeta(meta)
+		}
+	},
 }

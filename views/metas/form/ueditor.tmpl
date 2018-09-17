@@ -1,0 +1,36 @@
+<div class="qor-field">
+    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield">
+        <label class="qor-field__label" for="{{.InputId}}">
+        {{meta_label .Meta}}
+        </label>
+
+        <div class="qor-field__show">{{.Value}}</div>
+
+        <div class="qor-field__edit">
+            <!-- 加载编辑器的容器 -->
+            {{$ueditorCtrlId := "container"}}
+            {{if ne .Meta.Config.CtrlId ""}}
+                {{$ueditorCtrlId := .Meta.Config.CtrlId}}
+            {{end}}
+            <script id="{{$ueditorCtrlId}}" name="{{.InputName}}" type="text/plain">
+                {{.Value}}
+            </script>
+        </div>
+        {{if .Meta.Config.Plugins}}
+        {{range $plugin := .Meta.Config.Plugins}}
+            {{if eq $plugin.Name "custom_logic"}}
+                {{if ne $plugin.Source ""}}
+                    <script src="{{$plugin.Source}}"></script>
+                {{else}}
+
+                {{end}}
+            {{else}}
+                <script src="{{$plugin.Source}}"></script>
+            {{end}}
+        {{end}}
+        {{end}}
+    </div>
+</div>
+<script type="text/javascript">
+    var editor = UE.getEditor('{{$ueditorCtrlId}}');
+</script>
