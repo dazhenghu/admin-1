@@ -2,6 +2,8 @@ package admin
 
 import (
     "github.com/qor/qor/resource"
+    "github.com/qor/qor"
+    "github.com/qor/qor/utils"
 )
 
 type UeditorConfig struct {
@@ -23,13 +25,13 @@ func (ueditorConfig *UeditorConfig) ConfigureQorMeta(metaor resource.Metaor) {
     if meta, ok := metaor.(*Meta); ok {
         meta.Type = "ueditor"
 
-        //if !ueditorConfig.DisableHTMLSanitizer {
-        //    setter := meta.GetSetter()
-        //    meta.SetSetter(func(resource interface{}, metaValue *resource.MetaValue, context *qor.Context) {
-        //        metaValue.Value = utils.HTMLSanitizer.Sanitize(utils.ToString(metaValue.Value))
-        //        setter(resource, metaValue, context)
-        //    })
-        //}
+        if !ueditorConfig.DisableHTMLSanitizer {
+            setter := meta.GetSetter()
+            meta.SetSetter(func(resource interface{}, metaValue *resource.MetaValue, context *qor.Context) {
+                metaValue.Value = utils.HTMLSanitizer.Sanitize(utils.ToString(metaValue.Value))
+                setter(resource, metaValue, context)
+            })
+        }
 
         if ueditorConfig.Settings == nil {
             ueditorConfig.Settings = map[string]interface{}{}
