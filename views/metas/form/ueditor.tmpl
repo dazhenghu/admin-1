@@ -13,7 +13,7 @@
                 {{$ueditorCtrlId := .Meta.Config.CtrlId}}
             {{end}}
             <script id="{{$ueditorCtrlId}}" name="{{.InputName}}" type="text/plain">
-                {{raw .Value}}
+                {{unsafe_raw .Value}}
             </script>
         </div>
         {{if .Meta.Config.Plugins}}
